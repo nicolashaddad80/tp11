@@ -3,7 +3,7 @@ package fr.cnam.tp11.tests;
 import fr.cnam.tp11.Money;
 
 public class MoneyTest {
-  
+
     private Money m1;
     private Money m2;
 
