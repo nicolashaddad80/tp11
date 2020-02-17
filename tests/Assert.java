@@ -1,9 +1,7 @@
 package fr.cnam.tp11.tests;
 public final class Assert {
 
-    //TODO Complete this Class
-    //Put constructor to private inorder to avoid invoking it
-
+    /*Put constructor to private inorder to avoid invoking it*/
     private Assert() {
     }
 
