@@ -7,7 +7,7 @@ public final class Assert {
     private Assert() {
     }
 
-    public static final void  assertTrue(Boolean status){
+    public static final void  assertTrue(Boolean status) {
         if(!status)
             throw new Failure();
     }
