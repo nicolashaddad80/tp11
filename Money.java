@@ -1,8 +1,8 @@
 package fr.cnam.tp11;
 
-public class Money {//To clean put it private
-    public static boolean haveSameCurrency(Money a_Money1,Money a_Money2){
+public class Money {
 
+    private static boolean haveSameCurrency(Money a_Money1,Money a_Money2){
         return a_Money1.getCurrency().equals(a_Money2.getCurrency());
     }
 

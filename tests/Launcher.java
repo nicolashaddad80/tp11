@@ -1,6 +1,8 @@
 package fr.cnam.tp11.tests;
 
-import fr.cnam.cour11.DebugOnOFF;
+
+
+import fr.cnam.tp11.Tp11DebugOnOFF;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,8 +14,12 @@ public class Launcher {
    //TODO===========================
     TODO complete this class
 
-    3.Create the object test
-    4.Execute test methods
+    3.Create ExecElement internal class
+    . Clearte ArrayList of ExcElements
+    Change loading of testMethods to use ExecElements Array List
+    4. Display statisc
+    Display allSatatus.
+    5
     */
     //TODO===========================
     private Class<?> aClass = null;
@@ -26,8 +32,6 @@ public class Launcher {
         if (this.loadClass(aClassName)) {
             this.loadSetupTearDown();
             this.getTestMethods();
-            if (DebugOnOFF.DEBUG_ON)
-                for (Method method : this.testMethods) System.out.println(method.getName());
         }
     }
 
@@ -81,7 +85,7 @@ public class Launcher {
     public void startTests() {
 
         if (this.aClass != null) {
-            if (DebugOnOFF.DEBUG_ON)
+            if (Tp11DebugOnOFF.DEBUG_ON)
                 System.out.println("Starting tests");
             Object myObjectUnderTest;
             try {
@@ -109,10 +113,10 @@ public class Launcher {
 
             } catch (InstantiationException e) {
                 System.out.println("Issue during Instantiation");
-                if (DebugOnOFF.DEBUG_ON) e.printStackTrace();
+                if (Tp11DebugOnOFF.DEBUG_ON) e.printStackTrace();
             } catch (IllegalAccessException e) {
                 System.out.println("The Class is not public");
-                if (DebugOnOFF.DEBUG_ON) e.printStackTrace();
+                if (Tp11DebugOnOFF.DEBUG_ON) e.printStackTrace();
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
             } finally {
