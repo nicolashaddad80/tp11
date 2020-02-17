@@ -13,31 +13,6 @@ public class Launcher {
 
     /*Internal class to manage Execution statistics */
 
-    private static final class ExecElement {
-        private Method method;
-        private Exception failure = null;
-
-        public ExecElement(Method method) {
-            this.method = method;
-        }
-
-        public Method getMethod() {
-            return this.method;
-        }
-
-        public Throwable getCause() {
-            return this.failure.getCause();
-        }
-
-        public void setFailure(Exception failure) {
-            this.failure = failure;
-        }
-
-        public boolean getExecStatus() {
-            return this.failure == null;
-        }
-    }
-
     private Class<?> aClass = null;
     private Method setUp = null;
     private Method tearDown = null;
@@ -54,6 +29,11 @@ public class Launcher {
         }
     }
 
+    public static void main(String[] args) throws ClassNotFoundException {
+        Launcher mytestLauncher = new Launcher("fr.cnam.tp11.tests." + args[0]);
+        mytestLauncher.startTests();
+        System.out.println(mytestLauncher.getStatistics());
+    }
 
     /* 0.Load  test class */
     private void loadClass(String fileName) throws ClassNotFoundException {
@@ -137,7 +117,7 @@ public class Launcher {
         }
     }
 
-    private String displayStatistics() {
+    private String getStatistics() {
         /*Test Results*/
         /*1.Calculating Statistics*/
         int nbTotalTests = this.testMethodsExecution.size();
@@ -156,9 +136,9 @@ public class Launcher {
         testsResults.append("================================================\n");
         testsResults.append("=                 Statistics                   =\n");
         testsResults.append("================================================\n");
-        testsResults.append("Number of Tests : " + TextColor.BLUE.set + nbTotalTests + TextColor.DEFAULT.set+"\n");
-        testsResults.append("Number of PASSED Tests: " + TextColor.GREEN.set + nbPassTests + TextColor.DEFAULT.set + "/" + TextColor.BLUE.set + nbTotalTests + TextColor.DEFAULT.set+"\n");
-        testsResults.append("Number of Failed Tests: " + TextColor.RED.set + +nbFailTests + TextColor.DEFAULT.set + "/" + TextColor.BLUE.set + nbTotalTests + TextColor.DEFAULT.set+"\n");
+        testsResults.append("Number of Tests : " + TextColor.BLUE.set + nbTotalTests + TextColor.DEFAULT.set + "\n");
+        testsResults.append("Number of PASSED Tests: " + TextColor.GREEN.set + nbPassTests + TextColor.DEFAULT.set + "/" + TextColor.BLUE.set + nbTotalTests + TextColor.DEFAULT.set + "\n");
+        testsResults.append("Number of Failed Tests: " + TextColor.RED.set + +nbFailTests + TextColor.DEFAULT.set + "/" + TextColor.BLUE.set + nbTotalTests + TextColor.DEFAULT.set + "\n");
 
         /*displaying failure cause foe each Failed test*/
         testsResults.append("================================================\n");
@@ -167,19 +147,35 @@ public class Launcher {
 
         for (ExecElement execElement : this.testMethodsExecution) {
             if (!execElement.getExecStatus())
-                testsResults.append(TextColor.BLUE.set + execElement.getMethod().getName() + " : " + TextColor.RED.set + execElement.getCause()+"\n");
+                testsResults.append(TextColor.BLUE.set + execElement.getMethod().getName() + " : " + TextColor.RED.set + execElement.getCause() + "\n");
         }
         testsResults.append("================================================\n");
-        testsResults.append(TextColor.DEFAULT.set+"\n");
+        testsResults.append(TextColor.DEFAULT.set + "\n");
         return testsResults.toString();
     }
 
-    public static void main(String[] args) throws ClassNotFoundException {
-        Launcher mytestLauncher = new Launcher("fr.cnam.tp11.tests." + args[0]);
-        mytestLauncher.startTests();
-        System.out.println(mytestLauncher.displayStatistics());
+    private static final class ExecElement {
+        private Method method;
+        private Exception failure = null;
 
+        public ExecElement(Method method) {
+            this.method = method;
+        }
+
+        public Method getMethod() {
+            return this.method;
+        }
+
+        public Throwable getCause() {
+            return this.failure.getCause();
+        }
+
+        public void setFailure(Exception failure) {
+            this.failure = failure;
+        }
+
+        public boolean getExecStatus() {
+            return this.failure == null;
+        }
     }
-
-
 }

@@ -1,7 +1,7 @@
 package fr.cnam.tp11.tests;
 
-import fr.cnam.tp11.Tp11DebugOnOFF;
 import fr.cnam.tp11.Money;
+import fr.cnam.tp11.Tp11DebugOnOFF;
 
 public class MoneyTest {
 
@@ -19,7 +19,7 @@ public class MoneyTest {
 
     public void testAdd() {
         if (Tp11DebugOnOFF.DEBUG_ON) System.out.println("Starting testAdd");
-            m1.add(m2);
+        m1.add(m2);
         Assert.assertTrue(12 == m1.getAmount());
 
         if (Tp11DebugOnOFF.DEBUG_ON) System.out.println("End of testAdd");
@@ -28,7 +28,7 @@ public class MoneyTest {
     public void testSub() {
         if (Tp11DebugOnOFF.DEBUG_ON) System.out.println("Starting testSub");
         m1.sub(m2);
-        Assert.assertTrue(-2== m1.getAmount());
+        Assert.assertTrue(-2 == m1.getAmount());
         if (Tp11DebugOnOFF.DEBUG_ON) System.out.println("End of testSub");
     }
 
@@ -37,9 +37,9 @@ public class MoneyTest {
         if (Tp11DebugOnOFF.DEBUG_ON) System.out.println("End of tearDown");
     }
 
-    public void otherToTestLancher(){
+    public void otherToTestLancher() {
         //Should not be launched
-        assert(false);
+        assert (false);
     }
 
     public void testAddDollarsToEuros() {
