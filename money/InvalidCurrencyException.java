@@ -1,4 +1,4 @@
-package fr.cnam.tp11;
+package fr.cnam.tp11.money;
 
 public class InvalidCurrencyException extends IllegalArgumentException {
 

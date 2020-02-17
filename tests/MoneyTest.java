@@ -1,7 +1,8 @@
 package fr.cnam.tp11.tests;
 
-import fr.cnam.tp11.Money;
-import fr.cnam.tp11.Tp11DebugOnOFF;
+import fr.cnam.tp11.money.Money;
+import fr.cnam.tp11.utils.Assert;
+import fr.cnam.tp11.utils.Tp11DebugOnOFF;
 
 public class MoneyTest {
 

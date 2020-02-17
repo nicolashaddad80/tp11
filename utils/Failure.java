@@ -1,4 +1,4 @@
-package fr.cnam.tp11.tests;
+package fr.cnam.tp11.utils;
 
 public class Failure extends RuntimeException {
 

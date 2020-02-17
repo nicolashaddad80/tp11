@@ -1,15 +1,16 @@
-package fr.cnam.tp11.tests;
+package fr.cnam.tp11;
 
 
-import fr.cnam.tp11.TextColor;
-import fr.cnam.tp11.Tp11DebugOnOFF;
+import fr.cnam.tp11.utils.Failure;
+import fr.cnam.tp11.utils.TextColor;
+import fr.cnam.tp11.utils.Tp11DebugOnOFF;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-public class Launcher {
+public class LauncherImpl implements Launcher {
 
     /*Internal class to manage Execution statistics */
 
@@ -18,7 +19,7 @@ public class Launcher {
     private Method tearDown = null;
     private ArrayList<ExecElement> testMethodsExecution = new ArrayList<>();
 
-    public Launcher(String aClassName) {
+    public LauncherImpl(String aClassName) {
         try {
             this.loadClass(aClassName);
             this.loadSetupTearDown();
@@ -27,12 +28,6 @@ public class Launcher {
             this.aClass = null;
             System.out.println("Aucune Class n'est presente dans le fichier " + aClassName + "\n Veuillez essayer avec un autre afichier");
         }
-    }
-
-    public static void main(String[] args) throws ClassNotFoundException {
-        Launcher mytestLauncher = new Launcher("fr.cnam.tp11.tests." + args[0]);
-        mytestLauncher.startTests();
-        System.out.println(mytestLauncher.getStatistics());
     }
 
     /* 0.Load  test class */
@@ -110,14 +105,11 @@ public class Launcher {
                 if (Tp11DebugOnOFF.DEBUG_ON) e.printStackTrace();
             } catch (InvocationTargetException e) {
                 if (Tp11DebugOnOFF.DEBUG_ON) e.printStackTrace();
-            } finally {
-
             }
-
         }
     }
 
-    private String getStatistics() {
+    public String getStatistics() {
         /*Test Results*/
         /*1.Calculating Statistics*/
         int nbTotalTests = this.testMethodsExecution.size();

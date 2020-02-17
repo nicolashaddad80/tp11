@@ -1,4 +1,4 @@
-package fr.cnam.tp11;
+package fr.cnam.tp11.utils;
 
 public final class ANSIColorCode {
 
