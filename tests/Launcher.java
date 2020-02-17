@@ -1,7 +1,6 @@
 package fr.cnam.tp11.tests;
 
 
-
 import fr.cnam.tp11.Tp11DebugOnOFF;
 
 import java.lang.reflect.InvocationTargetException;
@@ -10,6 +9,29 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Launcher {
+
+    /*Iternal class to manage Execution statistics */
+
+    private static final  class ExecElement {
+        private Method method;
+
+        private Exception Failure = null;
+
+        public void setFailure(Exception failure) {
+            Failure = failure;
+        }
+
+        public Method getMethod(){
+            return this.method;
+        }
+
+
+
+        public ExecElement(Method method) {
+            this.method = method;
+        }
+    }
+
     /*
    //TODO===========================
     TODO complete this class
@@ -25,7 +47,7 @@ public class Launcher {
     private Class<?> aClass = null;
     private Method setUp = null;
     private Method tearDown = null;
-    private ArrayList<Method> testMethods = new ArrayList<>();
+    private ArrayList<ExecElement> testMethodsExecution = new ArrayList<>();
 
     public Launcher(String aClassName) {
 
@@ -78,7 +100,7 @@ public class Launcher {
         //constructing a list of Methods names
         for (Method method : methods)
             if (Pattern.matches(testRegex, method.getName()))
-                this.testMethods.add(method);
+                this.testMethodsExecution.add(new ExecElement(method));
 
     }
 
@@ -93,22 +115,23 @@ public class Launcher {
                 myObjectUnderTest = this.aClass.newInstance();
 
 
-                for (Method testMethod : this.testMethods) {
+                for (ExecElement execElement : this.testMethodsExecution) {
 
                     if (this.setUp != null)
                         this.setUp.invoke(myObjectUnderTest);
                     //TODO Update Statistics
                     try {
-                        testMethod.invoke(myObjectUnderTest);
+                        execElement.getMethod().invoke(myObjectUnderTest);
                     } catch (Failure e) {
-                        System.out.println(testMethod.getName() + " :Functional failure : ");
+                        execElement.setFailure(e);
+                        if (Tp11DebugOnOFF.DEBUG_ON)  System.out.println(execElement.getMethod().getName() + " : "+e.getCause());
                     } catch (Exception e) {
-                        System.out.println(testMethod.getName() + " :Runtime failure : " + e.getCause());
+                        execElement.setFailure(e);
+                        if (Tp11DebugOnOFF.DEBUG_ON) System.out.println(execElement.getMethod().getName() + " :Runtime failure : " + e.getCause());
                     }
 
                     if (this.tearDown != null)
                         this.tearDown.invoke(myObjectUnderTest);
-
                 }
 
             } catch (InstantiationException e) {
@@ -118,7 +141,7 @@ public class Launcher {
                 System.out.println("The Class is not public");
                 if (Tp11DebugOnOFF.DEBUG_ON) e.printStackTrace();
             } catch (InvocationTargetException e) {
-                e.printStackTrace();
+                if (Tp11DebugOnOFF.DEBUG_ON)  e.printStackTrace();
             } finally {
                 //TODO Display statistics
             }

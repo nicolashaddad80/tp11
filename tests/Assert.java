@@ -9,6 +9,6 @@ public final class Assert {
 
     public static final void  assertTrue(Boolean status) {
         if(!status)
-            throw new Failure();
+            throw new Failure("Functional failure");
     }
 }
